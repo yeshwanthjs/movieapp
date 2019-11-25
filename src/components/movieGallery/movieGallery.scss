@@ -1,0 +1,125 @@
+$black: #222;
+// Media Queries
+// 1. Name and define our breakpoints. Name the map something sensical
+// 2. Write a comma separated list of key: value, pairs that we will use later
+$breakpoints: (
+  x-small: 20em,
+  small: 34em,
+  large: 60em
+);
+
+// if selector is wider than the screensize we are calling
+@mixin bp($screen-size) {
+  // and if our map that we named $breakpoints includes values (we called them $screen-size)
+  @if map-has-key($breakpoints, $screen-size) {
+    // then write out a nested Media Query that will target that value as our min-width
+    @media (min-width: map-get($breakpoints, $screen-size)) {
+      // write CSS within this mixin that would apply to only this breakpoint or above
+      @content;
+    }
+    // if the screen-size we are requesting doesn't exist, then tell me when it is compiled
+  } @else {
+    // Debugging
+    @warn "'#{$screen-size}' has not been declared as a breakpoint.";
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: helvetica;
+  position: relative;
+  font-size: 100%;
+  background: #fff;
+  //   background: -webkit-linear-gradient(to right, #575553, #000000);
+  //   background: linear-gradient(to right, #575553, #000000);
+}
+.gallery-container {
+  padding: 0.9375rem 0;
+}
+// .gallery-container h1 {
+//   margin: 2rem 0;
+//   padding: 0;
+//   text-align: center;
+//   color: #fff;
+//   text-transform: uppercase;
+//   font-size: 6.5vw;
+//   font-weight: lighter;
+// }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+
+  @include bp(x-small) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  @include bp(small) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  // When above our large breakpoint, make sure we have 3 columns
+  @include bp(large) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  img {
+    width: 100%;
+    border: 5px solid #fff;
+  }
+}
+.gallery-grid div {
+  position: relative;
+  cursor: pointer;
+  &:before,
+  &:after {
+    transition: 0.3s opacity ease;
+    opacity: 0;
+  }
+  &:after {
+    content: "\f04b";
+    font-family: FontAwesome;
+    padding-left: 11px;
+    padding-top: 14px;
+    width: 80px;
+    height: 79px;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color: rgb(204, 203, 203);
+    border: 5px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    text-align: center;
+    font-size: 40px;
+    position: absolute;
+    left: 38%;
+    top: 36%;
+    display: block;
+  }
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    background: rgba(#222, 0.5);
+    display: block;
+  }
+  &:hover {
+    &:before,
+    &:after {
+      opacity: 1;
+      transition: 0.3s opacity ease;
+    }
+  }
+}
