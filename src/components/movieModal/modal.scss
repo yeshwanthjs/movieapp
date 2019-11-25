@@ -52,14 +52,17 @@ $breakpoints: (
     text-align: start;
   }
   .movieDetails {
+    margin: 2% !important;
     display: flex;
     // justify-content: space-between;
     // margin: 0px 50px;
     .movieSubDetails {
       text-align: start;
+      margin-left: 10%;
     }
   }
   .movieScenes {
+    padding: 2%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 8px;
